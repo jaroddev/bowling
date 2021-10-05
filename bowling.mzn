@@ -30,6 +30,8 @@ constraint forall( t in tours where t<10)(score[t]=partie[2*t-1]+partie[2*t]); %
 %les bonus
 constraint forall(t in tours)((partie[2*t-1]+partie[2*t]<10)->(bonus[t]=0)); %pas de bonus 
 constraint forall(t in tours)(((partie[2*t-1]+partie[2*t]=10)/\(partie[2*t-1]!=10))->(bonus[t]=partie[2*t+1])); %spare
+constraint forall(t in tours)((partie[2*t-1]=10)/\(partie[2*t+1]!=10) -> bonus[t]=partie[2*t+1] + partie[2*t+2] );  % single strike
+constraint forall(t in tours)((partie[2*t-1]=10)/\(partie[2*t+1]=10) -> bonus[t]=partie[2*t+1] + partie[2*t+3] );  % multi strike
 
 
 %contraintes de jeu
