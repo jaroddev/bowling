@@ -20,17 +20,19 @@ constraint nb_strikes >= 0;
 constraint nb_spares >= 0;
 constraint nb_fails >= 0;
 
+
 %init
 %constraint forall(l in lancers)(partie[l]=init[l]);
 
 %contraintes de liaisons
 constraint (score_total=sum(t in tours)(score[t])+sum(t in tours)(bonus[t])); % score sum + bonus sum
-constraint forall( t in tours where t<10)(score[t]=partie[2*t-1]+partie[2*t]); %score simple de base sauf dernier coup
-
+constraint forall( t in tours )(score[t]=partie[2*t-1]+partie[2*t]); %score simple de base sauf dernier coup
+constraint (((partie[19] != 10)/\(partie[19]+partie[20] =10)) \/ (partie[19] = 10) -> score_total = score_total + partie[21]); % score dernier coup si strike ou spare
 %les bonus
 constraint forall(t in tours)((partie[2*t-1]+partie[2*t]<10)->(bonus[t]=0)); %pas de bonus 
 constraint forall(t in tours)(((partie[2*t-1]+partie[2*t]=10)/\(partie[2*t-1]!=10))->(bonus[t]=partie[2*t+1])); %spare
-
+constraint forall (t in tours where t <10)(((partie[2*t-1] =10) /\(partie[2*t-1]=0))->(bonus[t]= partie[2*t] + partie[2*t+1])); %bonus strike hors dernier coup
+constraint forall (t in tours)(((partie[2*t-1] =10) /\(partie[2*t-1]=0))->(bonus[t]= partie[2*t] + partie[2*t+1])); %bonus  strike dernier coup
 
 %contraintes de jeu
 constraint forall(t in tours)(partie[2*t-1] + partie[t*2] <= 10); %val1 + val2 <= 10
