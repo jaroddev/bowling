@@ -26,18 +26,19 @@ constraint nb_fails >= 0;
 %contraintes de liaisons
 constraint (score_total=sum(t in tours)(score[t])+sum(t in tours)(bonus[t])); % score sum + bonus sum
 constraint forall( t in tours where t<10)(score[t]=partie[2*t-1]+partie[2*t]); %score simple de base sauf dernier coup
+constraint score[10]=partie[19]+partie[20]+partie[21]; % score simple dernier coups
 
 %les bonus
 constraint forall(t in tours)((partie[2*t-1]+partie[2*t]<10)->(bonus[t]=0)); %pas de bonus 
 constraint forall(t in tours)(((partie[2*t-1]+partie[2*t]=10)/\(partie[2*t-1]!=10))->(bonus[t]=partie[2*t+1])); %spare
 constraint forall(t in tours)((partie[2*t-1]=10)/\(partie[2*t+1]!=10) -> bonus[t]=partie[2*t+1] + partie[2*t+2] );  % single strike
-constraint forall(t in tours)((partie[2*t-1]=10)/\(partie[2*t+1]=10) -> bonus[t]=partie[2*t+1] + partie[2*t+3] );  % multi strike
-
+constraint forall(t in tours where t<10)((partie[2*t-1]=10)/\(partie[2*t+1]=10) -> bonus[t]=partie[2*t+1] + partie[2*t+3] );  % multi strike
+constraint (partie[19]=10)/\(partie[21]=10) -> bonus[10]=partie[21]; %bonus double strike final
 
 %contraintes de jeu
 constraint forall(t in tours)(partie[2*t-1] + partie[t*2] <= 10); %val1 + val2 <= 10
-constraint forall(t in tours where t<10)(partie[2*t-1]+partie[2*t]<=10);
-constraint ((partie[19]!=10)->(partie[19]+partie[20]<=10));
+constraint forall(t in tours where t<10)(partie[2*t-1]+partie[2*t]<=10); % val1+ val2 <= 10 
+constraint ((partie[19]!=10)->(partie[19]+partie[20]<=10)/\(partie[21]=0)); %no final strike
 
 %nombre de spares et de strikes et coups nuls
 constraint nb_strikes=sum(t in tours)(bool2int(partie[2*t-1]=10));
@@ -45,8 +46,6 @@ constraint nb_strikes=sum(t in tours)(bool2int(partie[2*t-1]=10));
 % constraint nb_spares
 constraint nb_spares=sum(t in tours)(bool2int(partie[2*t-1] + partie[t*2] = 10 /\ partie[2*t-1]!= 10));
 
-
-% constraint si val1 = 10 => val = 0
 
 %score souhaité
 constraint (score_total=140);
@@ -58,7 +57,9 @@ constraint (score_total=140);
 %solve::int_search(partie, dom_w_deg, indomain_max,complete) minimize(abs(nb_spares-nb_strikes));
 
 %solve::int_search(partie, dom_w_deg, indomain_max,complete) maximize(nb_spares);
+
 solve::int_search(partie, first_fail, indomain_max,complete) satisfy;
+
 %solve satisfy; 
 
             
