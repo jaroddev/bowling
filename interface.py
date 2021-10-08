@@ -1,18 +1,24 @@
 from tkinter import *
-from index import solveInstance
+from index import solveInstance, solveWithThrow
 
 
 def action():
     # récupérer les données de l'entrée2 
     cible = int (entrée2.get())
-    
-    # solve the problem
-    result = solveInstance(cible)
+    lancees_possible = entrée1.get()
+
+    print(lancees_possible)
+
+    if lancees_possible != "":
+        print("here")
+        result = solveWithThrow(lancees_possible, cible)
+    else:
+        result = solveInstance(cible)
+
     print(result)
 
     # mettre un text par défaut pour l'entrée
-    entrée1.insert(0,result)
-
+    # entrée1.insert(0,result)
 
 # Création d'une fenêtre avec la classe Tk :
 fenetre = Tk()

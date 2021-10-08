@@ -21,5 +21,24 @@ def solveInstance(cible: int):
     result = instance.solve()
     return result
 
-# result = solveInstance(140)
-# print(type(result))
+def solveWithThrow(init, cible):
+    # define the constants
+    file_name = "./bowling.mzn"
+    solver_name = "gecode"
+
+    # Load n-Queens model from file
+    bowling = Model(file_name)
+
+    # Find the MiniZinc solver configuration for Gecode
+    gecode = Solver.lookup(solver_name)
+
+    # Create an Instance of the n-Queens model for Gecode
+    instance = Instance(gecode, bowling)
+
+    instance.add_string(f"init={init}")
+
+    instance["cible"] = cible
+
+    # solve and return the string list result
+    result = instance.solve()
+    return result
