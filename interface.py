@@ -18,7 +18,7 @@ def action():
     print(result)
 
     # mettre un text par défaut pour l'entrée
-    # entrée1.insert(0,result)
+    entrée1.insert(0,result)
 
 # Création d'une fenêtre avec la classe Tk :
 fenetre = Tk()
