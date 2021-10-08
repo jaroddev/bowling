@@ -16,6 +16,8 @@ var int:nb_strikes;
 var int:nb_fails; %nombre de lancer = 0 (pas après un strike)
 
 
+int: cible;
+
 constraint nb_strikes >= 0;
 constraint nb_spares >= 0;
 constraint nb_fails >= 0;
@@ -49,7 +51,7 @@ constraint nb_fails=sum(t in tours where t<10)(
 
 
 %score souhaité
-constraint (score_total=140);
+constraint (score_total=cible);
 
 %resolution
 
