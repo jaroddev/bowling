@@ -1,6 +1,6 @@
 # bowling
 
-# Creation of the python virtual environment
+# Create the python virtual environment
 
 Create the environment
 ```
@@ -22,7 +22,17 @@ Install every required dependencies recursively
 pip install -r requirements.txt
 ```
 
-# Launch the script 
+# Ensure that you can run tkinter
 ```
-python3 index.py
+python3 -m tkinter
+```
+
+If you are on debian and you can't run the module tkinter run the following command
+```
+sudo apt install python3-tk
+```
+
+# run the application 
+```
+python3 interface.py
 ```
