@@ -10,6 +10,11 @@ def action():
     print(score)
 
 
+def actionrest():
+        entrée1.delete(0,44)
+
+
+
 # Création d'une fenêtre avec la classe Tk :
 fenetre = Tk()
 # Ajout d'un titre à la fenêtre principale :
@@ -20,6 +25,7 @@ fenetre.iconbitmap("")
 fenetre.geometry("400x300")
 label1 = Label (fenetre, text = "Lancers")
 label1.place(x=50,y=50)
+
 
 entrée1 = Entry (fenetre)
 entrée1.place(x=200,y=50)
@@ -32,5 +38,7 @@ entrée2.place(x=200,y=100)
 
 Calculer=Button(fenetre, text="Calculer", command = action)
 Calculer.place(x=200,y=150)
+Calculer=Button(fenetre, text="reset", command = actionrest)
+Calculer.place(x=50,y=150)
 # Affichage de la fenêtre créée :
 fenetre.mainloop()
