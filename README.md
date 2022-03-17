@@ -1,4 +1,9 @@
-# bowling
+# bowling project
+
+Bowling comes with a more complex scoring system than we think, in this repository we use
+a CSP solver like minizinc and the python Tkinter UI toolkit library to create an application that returns
+a move combination for a given score.
+
 
 # Create the python virtual environment
 
